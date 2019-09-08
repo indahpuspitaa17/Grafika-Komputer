@@ -20,6 +20,18 @@ float x=0,y=0;
 float xpos=0,ypos1=0,ypos2=60,ypos3=30,ypos4=90;
 bool n,m;
 
+void doIfKeyPressed(int key, int action)
+    {
+            if ((key == GLFW_KEY_UP && action == GLFW_PRESS) || (key == GLFW_KEY_UP && action == GLFW_REPEAT))
+                y-=10;
+            if ((key == GLFW_KEY_DOWN && action == GLFW_PRESS) || (key == GLFW_KEY_DOWN && action == GLFW_REPEAT))
+                y+=10;
+            if ((key == GLFW_KEY_LEFT && action == GLFW_PRESS) || (key == GLFW_KEY_LEFT && action == GLFW_REPEAT))
+                x-=10;
+            if ((key == GLFW_KEY_RIGHT && action == GLFW_PRESS) || (key == GLFW_KEY_RIGHT && action == GLFW_REPEAT))
+                x+=10;
+    }
+
 static void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -28,14 +40,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
-    if (key == GLFW_KEY_UP && action == GLFW_REPEAT && y>-100)
-        y--;
-    if (key == GLFW_KEY_DOWN && action == GLFW_REPEAT && y<34)
-        y++;
     if (key == GLFW_KEY_LEFT && action == GLFW_REPEAT && x>-150)
         x--;
-    if (key == GLFW_KEY_RIGHT && action == GLFW_REPEAT && x<60)
-        x++;
+    doIfKeyPressed(key, action);
 }
 
     void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -72,7 +79,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void A();
     void H();
 
-    void colour();
     void G();
     void  Enam();
     void  Empat();
@@ -85,8 +91,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
    // void SegitigaAtas();
     void SegitigaKananBawah();
-
+    void colour();
     void Muter();
+    void Telor();
 
 void display()
     {
@@ -173,8 +180,8 @@ int main(void) {
 
              //SegitigaAtas();
             SegitigaKananBawah();
-
              Muter();
+             Telor();
 
 
             glfwSwapBuffers(window);
@@ -1558,10 +1565,12 @@ void Telor()
 {
     glPushMatrix();
     glColor3ub(253,124,4);
-    circle(40,649.08,55.92,2);
+    circle(40,728.7,73.41,2);
 
     glColor3ub(212,244,81);
-    circle(20,649.08,55.92,2);
+    circle(20,728.7,73.41,2);
+    glPopMatrix();
+
 }
 
 void Muter()
