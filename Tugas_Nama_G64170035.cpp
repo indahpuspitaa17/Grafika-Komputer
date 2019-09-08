@@ -4,6 +4,22 @@
 #include <math.h>
 #include <windows.h>
 
+#define xmin -10
+#define xmax 10
+#define ymin -10
+#define ymax 10
+
+float gerakan = 0.0;
+float gerak = 0.0;
+float gerak2 = 0.0;
+float gerak3 = 0.0;
+float gerak4 = 0.0;
+float waktu = 20.2;
+float waktu2 = 1.0;
+float x=0,y=0;
+float xpos=0,ypos1=0,ypos2=60,ypos3=30,ypos4=90;
+bool n,m;
+
 static void error_callback(int error, const char* description)
 {
     fputs(description, stderr);
@@ -12,7 +28,23 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key == GLFW_KEY_UP && action == GLFW_REPEAT && y>-100)
+        y--;
+    if (key == GLFW_KEY_DOWN && action == GLFW_REPEAT && y<34)
+        y++;
+    if (key == GLFW_KEY_LEFT && action == GLFW_REPEAT && x>-150)
+        x--;
+    if (key == GLFW_KEY_RIGHT && action == GLFW_REPEAT && x<60)
+        x++;
 }
+
+    void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+    {
+        if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+            if (n) n=false;
+            else n=true;
+        }
+    }
 
     void setup_viewport(GLFWwindow* window)
     {
@@ -31,12 +63,130 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glLoadIdentity();
     }
 
-    void display()
+//Fungsi untuk menampilkan objek
+    //void bg();
+    void cloud();
+    void I();
+    void N();
+    void D();
+    void A();
+    void H();
+
+    void colour();
+    void G();
+    void  Enam();
+    void  Empat();
+    void  Satu();
+    void  Tujuh();
+    void  Nol();
+    void  Nol2();
+    void  Tiga();
+    void  Lima();
+
+   // void SegitigaAtas();
+    void SegitigaKananBawah();
+
+    void Muter();
+
+void display()
     {
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f); //warna background
         glClear(GL_COLOR_BUFFER_BIT);
         glFlush();
+
+    if (!n) glColor3ub(93,148,251);
+    else glColor3ub(0,0,0);
+    glBegin(GL_POLYGON);
+        glVertex2f(0,0);
+        glVertex2f(0,800);
+        glVertex2f(800,800);
+        glVertex2f(800,0);
+    glEnd();
+    glFlush();
+
+
+         if (gerakan<250) gerakan+=0.5;
+          else gerakan=0;
+          if (gerak<600) gerak+=2.5;
+          else gerak=0;
+          if (gerak2<400) gerak2+=2.5;
+          else gerak2=0;
+          if (gerak3<1500) gerak3+=2.5;
+          else gerak3=0;
+        waktu = glfwGetTime();
+        glFlush();
+    gerak++;
+
     }
+int main(void) {
+     // Anti Aliasing
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glEnable(GL_POLYGON_SMOOTH);
+        glEnable(GL_POINT_SMOOTH);
+
+    //Window
+        GLFWwindow* window;
+        glfwSetErrorCallback(error_callback);
+
+        if (!glfwInit())exit(EXIT_FAILURE);
+        window = glfwCreateWindow(800, 800, "Indah Puspita - G64170035", NULL, NULL);
+
+        if (!window)
+        {
+          glfwTerminate();
+          exit(EXIT_FAILURE);
+        }
+
+        glfwMakeContextCurrent(window);
+        glfwSwapInterval(1);
+        glfwSetKeyCallback(window, key_callback);
+        glfwSetMouseButtonCallback(window, mouse_button_callback);
+
+        while (!glfwWindowShouldClose(window))
+        {
+            setup_viewport(window);
+            int width, height;
+            glfwGetFramebufferSize(window, &width, &height);
+            glViewport(0, 0, width, height);
+
+            display();
+            //Fungsi untuk menampilkan objek
+           // bg();
+            cloud();
+             I();
+             N();
+             D();
+             A();
+             H();
+
+             G();
+             Enam();
+             Empat();
+             Satu();
+             Tujuh();
+             Nol();
+             Nol2();
+             Tiga();
+             Lima();
+
+             //SegitigaAtas();
+            SegitigaKananBawah();
+
+             Muter();
+
+
+            glfwSwapBuffers(window);
+            glfwPollEvents();
+        }
+
+    //Fungsi Exit
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    exit(EXIT_SUCCESS);
+ }
+
 
 //Background
     void bg()
@@ -54,27 +204,27 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void I()
     {
          glBegin(GL_POLYGON);
-          glColor3ub(0,91,91);
-          glVertex2f(116.21,183.72);
-          glVertex2f(116.21,200.97);
-          glVertex2f(163.07,200.97);
-          glVertex2f(163.07,183.72);
+          glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+          glVertex2f(116.21-gerakan/10,183.72);
+          glVertex2f(116.21-gerakan/10,200.97);
+          glVertex2f(163.07-gerakan/10,200.97);
+          glVertex2f(163.07-gerakan/10,183.72);
           glEnd();
 
           glBegin(GL_POLYGON);
-          glColor3ub(0,91,91);
-          glVertex2f(131.75,200.97);
-          glVertex2f(147.29,200.97);
-          glVertex2f(147.29,304.79);
-          glVertex2f(131.75,304.79);
+          glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+          glVertex2f(131.75-gerakan/10,200.97);
+          glVertex2f(147.29-gerakan/10,200.97);
+          glVertex2f(147.29-gerakan/10,304.79);
+          glVertex2f(131.75-gerakan/10,304.79);
           glEnd();
 
           glBegin(GL_POLYGON);
-          glColor3ub(0,91,91);
-          glVertex2f(116.21,304.21);
-          glVertex2f(116.21,322.06);
-          glVertex2f(163.07,322.06);
-          glVertex2f(163.07,304.79);
+          glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+          glVertex2f(116.21-gerakan/10,304.21);
+          glVertex2f(116.21-gerakan/10,322.06);
+          glVertex2f(163.07-gerakan/10,322.06);
+          glVertex2f(163.07-gerakan/10,304.79);
           glEnd();
     }
 
@@ -82,27 +232,27 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void N()
     {
         glBegin(GL_QUADS);
-        glColor3ub(0,91,91);
-        glVertex2f(198.48,184.3);
-        glVertex2f(214.03,184.3);
-        glVertex2f(214.03,322.64);
-        glVertex2f(198.48,322.64);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(198.48-gerakan/10,184.3);
+        glVertex2f(214.03-gerakan/10,184.3);
+        glVertex2f(214.03-gerakan/10,322.64);
+        glVertex2f(198.48-gerakan/10,322.64);
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(214.03,236.35);
-        glVertex2f(276.4,288.12);
-        glVertex2f(276.4,270.87);
-        glVertex2f(214.03,218.82);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(214.03-gerakan/10,236.35);
+        glVertex2f(276.4-gerakan/10,288.12);
+        glVertex2f(276.4-gerakan/10,270.87);
+        glVertex2f(214.03-gerakan/10,218.82);
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(276.4,184.3);
-        glVertex2f(291.95,184.3);
-        glVertex2f(291.95,322.64);
-        glVertex2f(276.4,322.64);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(276.4-gerakan/10,184.3);
+        glVertex2f(291.95-gerakan/10,184.3);
+        glVertex2f(291.95-gerakan/10,322.64);
+        glVertex2f(276.4-gerakan/10,322.64);
         glEnd();
 
     }
@@ -111,7 +261,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void D()
     {
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
         glVertex2f(328.36,183.72);
         glVertex2f(390.75,183.72);
         glVertex2f(390.75,200.97);
@@ -119,7 +269,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
         glVertex2f(328.36,200.97);
         glVertex2f(343.9,200.97);
         glVertex2f(343.9,322.06);
@@ -127,7 +277,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
         glVertex2f(343.9,322.06);
         glVertex2f(390.75,322.06);
         glVertex2f(390.75,304.79);
@@ -135,7 +285,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
         glVertex2f(390.75,304.79);
         glVertex2f(406.29,304.79);
         glVertex2f(406.29,200.97);
@@ -146,69 +296,86 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void A()
     {
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(509.88,199.51);
-        glVertex2f(463.03,199.51);
-        glVertex2f(463.03,182.26);
-        glVertex2f(509.88,182.26);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(509.88+gerakan/10,199.51);
+        glVertex2f(463.03+gerakan/10,199.51);
+        glVertex2f(463.03+gerakan/10,182.26);
+        glVertex2f(509.88+gerakan/10,182.26);
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(509.88,199.51);
-        glVertex2f(525.43,199.51);
-        glVertex2f(525.43,320.6);
-        glVertex2f(509.88,320.6);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(509.88+gerakan/10,199.51);
+        glVertex2f(525.43+gerakan/10,199.51);
+        glVertex2f(525.43+gerakan/10,320.6);
+        glVertex2f(509.88+gerakan/10,320.6);
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(509.88,286.08);
-        glVertex2f(509.88,268.56);
-        glVertex2f(463.03,268.56);
-        glVertex2f(463.03,286.08);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(509.88+gerakan/10,286.08);
+        glVertex2f(509.88+gerakan/10,268.56);
+        glVertex2f(463.03+gerakan/10,268.56);
+        glVertex2f(463.03+gerakan/10,286.08);
         glEnd();
 
         glBegin(GL_POLYGON);
-        glColor3ub(0,91,91);
-        glVertex2f(463.03,320.6);
-        glVertex2f(447.49,320.6);
-        glVertex2f(447.49,199.51);
-        glVertex2f(463.03,199.51);
+        glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+        glVertex2f(463.03+gerakan/10,320.6);
+        glVertex2f(447.49+gerakan/10,320.6);
+        glVertex2f(447.49+gerakan/10,199.51);
+        glVertex2f(463.03+gerakan/10,199.51);
         glEnd();
     }
 //Huruf H
     void H()
     {
         glBegin(GL_POLYGON);
-            glColor3ub(0,91,91);
-            glVertex2f(565.48,182.26);
-            glVertex2f(581.02,182.26);
-            glVertex2f(581.02,320.6);
-            glVertex2f(565.48,320.6);
+            glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+            glVertex2f(565.48+gerakan/10,182.26);
+            glVertex2f(581.02+gerakan/10,182.26);
+            glVertex2f(581.02+gerakan/10,320.6);
+            glVertex2f(565.48+gerakan/10,320.6);
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3ub(0,91,91);
-            glVertex2f(581.02,251.3);
-            glVertex2f(581.02,268.56);
-            glVertex2f(627.87,268.56);
-            glVertex2f(627.87,251.3);
+            glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+            glVertex2f(581.02+gerakan/10,251.3);
+            glVertex2f(581.02+gerakan/10,268.56);
+            glVertex2f(627.87+gerakan/10,268.56);
+            glVertex2f(627.87+gerakan/10,251.3);
         glEnd();
 
         glBegin(GL_POLYGON);
-            glColor3ub(0,91,91);
-            glVertex2f(627.87,182.26);
-            glVertex2f(643.41,182.26);
-            glVertex2f(643.41,320.6);
-            glVertex2f(627.87,320.6);
+            glColor3ub(0+158*waktu,0+117*waktu2,0+87*waktu);
+            glVertex2f(627.87+gerakan/10,182.26);
+            glVertex2f(643.41+gerakan/10,182.26);
+            glVertex2f(643.41+gerakan/10,320.6);
+            glVertex2f(627.87+gerakan/10,320.6);
         glEnd();
     }
+
+
+void colour(int x, bool shadow) {
+    if (x>=1200) x-=1200;
+    if (x<200 && shadow) glColor3ub(100,0,0);
+    else if (x<400 && shadow) glColor3ub(0,100,0);
+    else if (x<600 && shadow) glColor3ub(0,0,100);
+    else if (x<800 && shadow) glColor3ub(0,100,100);
+    else if (x<1000 && shadow) glColor3ub(100,0,100);
+    else if (x<1200 && shadow) glColor3ub(100,100,0);
+    else if (x<200) glColor3ub(200,0,0);
+    else if (x<400) glColor3ub(0,200,0);
+    else if (x<600) glColor3ub(0,0,200);
+    else if (x<800) glColor3ub(0,200,200);
+    else if (x<1000) glColor3ub(200,0,200);
+    else if (x<1200) glColor3ub(200,200,0);
+}
 
 //Huruf G
     void G()
     {
-        glBegin(GL_POLYGON);
+            glBegin(GL_POLYGON);
             glColor3ub(254,51,10);
             glVertex2f(183.17,352.92);
             glVertex2f(190.67,352.92);
@@ -1369,66 +1536,101 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
         glEnd();
     }
 
+void circle(float size, float x, float y, int z)
+{
+    float m, n, o;
+    m = x;
+    n = y;
+    o = z;
+    int N = 30;
+    float pX, pY;
+    glBegin(GL_POLYGON);
+    for(int i = 0; i < N; i++)
+    {
+        pX = sin(i*o*3.14 / N);
+        pY = cos(i*o*3.14 / N);
+        glVertex2f(pX * size + m, pY * size + n); // ngatur posisi lingkaran disini
+    }
+    glEnd();
+}
 
-int main(void) {
-     // Anti Aliasing
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_LINE_SMOOTH);
-    glEnable(GL_POLYGON_SMOOTH);
-    glEnable(GL_POINT_SMOOTH);
+void Telor()
+{
+    glPushMatrix();
+    glColor3ub(253,124,4);
+    circle(40,649.08,55.92,2);
 
-        //Window
-        GLFWwindow* window;
-        glfwSetErrorCallback(error_callback);
+    glColor3ub(212,244,81);
+    circle(20,649.08,55.92,2);
+}
 
-        if (!glfwInit())exit(EXIT_FAILURE);
-        window = glfwCreateWindow(800, 800, "Indah Puspita - G64170035", NULL, NULL);
+void Muter()
+{
+    //Persegi muter ditengah
+    glPushMatrix();
+    glTranslated(365.96,303.99, 0); //bikin muter
+    glRotatef((float)glfwGetTime()*+300.0f,0.0f,0.0f,1.0f);
+    glTranslated(-428.111254,-385.4045,0);
+    glBegin(GL_LINE_LOOP);
+    glColor3ub(93,93,175);
+    glVertex2d(137.42, 381.04);
+    glVertex2d(324.37, 283.16);
+    glVertex2d(423.84, 105.71);
+    glVertex2d(526.1, 283.7);
+    glVertex2d(710.26, 381.04);
+    glVertex2d(526.85, 481.52);
+    glVertex2d(423.84, 656.37);
+    glVertex2d(324.28, 481.27);
+    glEnd();
+     glPopMatrix();
 
-        if (!window)
-        {
-          glfwTerminate();
-          exit(EXIT_FAILURE);
+    //Persegi muter di tengah juga
+    glPushMatrix();
+    glTranslated(365.96,303.99, 0); //bikin muter
+    glRotatef((float)glfwGetTime()*-300.0f,0.0f,0.0f,1.0f);
+    glTranslated(-428.111254,-385.4045,0);
+    glBegin(GL_LINE_LOOP);
+    glColor3ub(93,93,175);
+    glVertex2d(267.29 , 232.94);
+    glVertex2d(594.93, 232.94);
+    glVertex2d(594.93, 539.15);
+    glVertex2d(267.29, 539.15);
+    glEnd();
+    glPopMatrix();
+}
+
+void cloud() {
+    glPushMatrix();
+    if (xpos>576) xpos=-234;
+    glTranslatef(-(xpos+=0.1),0,0);
+    glColor3ub(255,255,255);
+    glBegin(GL_TRIANGLE_STRIP);
+        for (int i=-180; i<=180; i++) {
+            float rad = i*3.14159/180;
+            glVertex2f(450,60);
+            glVertex2f(450+cos(rad)*18,60+sin(rad)*18);
         }
-
-        glfwMakeContextCurrent(window);
-        glfwSwapInterval(1);
-        glfwSetKeyCallback(window, key_callback);
-
-        while (!glfwWindowShouldClose(window))
-        {
-            setup_viewport(window);
-            int width, height;
-            glfwGetFramebufferSize(window, &width, &height);
-            glViewport(0, 0, width, height);
-
-          //fungsi untuk menampilkan objek
-        bg();
-         I();
-         N();
-         D();
-         A();
-         H();
-
-         G();
-         Enam();
-         Empat();
-         Satu();
-         Tujuh();
-         Nol();
-         Nol2();
-         Tiga();
-         Lima();
-
-         SegitigaAtas();
-         SegitigaKananBawah();
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+    glEnd();
+    glBegin(GL_TRIANGLE_STRIP);
+        for (int i=-180; i<=180; i++) {
+            float rad = i*3.14159/180;
+            glVertex2f(478,54);
+            glVertex2f(478+cos(rad)*24,54+sin(rad)*24);
         }
-
-    //Fungsi Exit
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    exit(EXIT_SUCCESS);
- }
+    glEnd();
+    glBegin(GL_TRIANGLE_STRIP);
+        for (int i=-180; i<=180; i++) {
+            float rad = i*3.14159/180;
+            glVertex2f(518,46);
+            glVertex2f(518+cos(rad)*32,46+sin(rad)*32);
+        }
+    glEnd();
+    glBegin(GL_TRIANGLE_STRIP);
+        for (int i=-180; i<=180; i++) {
+            float rad = i*3.14159/180;
+            glVertex2f(518,46);
+            glVertex2f(555+cos(rad)*21,57+sin(rad)*21);
+        }
+    glEnd();
+    glPopMatrix();
+    }
