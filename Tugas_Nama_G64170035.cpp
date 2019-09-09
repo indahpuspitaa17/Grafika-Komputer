@@ -93,7 +93,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
     void SegitigaKananBawah();
     void colour();
     void Muter();
-    void Telor();
+    void Telor(int t);
 
 void display()
     {
@@ -150,9 +150,10 @@ int main(void) {
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
         glfwSetMouseButtonCallback(window, mouse_button_callback);
-
+        int hitung = 0;
         while (!glfwWindowShouldClose(window))
         {
+            hitung++;
             setup_viewport(window);
             int width, height;
             glfwGetFramebufferSize(window, &width, &height);
@@ -181,11 +182,13 @@ int main(void) {
              //SegitigaAtas();
             SegitigaKananBawah();
              Muter();
-             Telor();
+             Telor(hitung);
 
 
             glfwSwapBuffers(window);
             glfwPollEvents();
+
+            hitung = (hitung > 1000) ? 0 : hitung;
         }
 
     //Fungsi Exit
@@ -1561,14 +1564,17 @@ void circle(float size, float x, float y, int z)
     glEnd();
 }
 
-void Telor()
+void Telor(int t)
 {
+    int waktu21 = t;
     glPushMatrix();
     glColor3ub(253,124,4);
-    circle(40,728.7,73.41,2);
+    if(waktu21 < 500 )circle(40,728.7,73.41,2);
+    else circle(40*2,728.7,73.41,2);
 
     glColor3ub(212,244,81);
-    circle(20,728.7,73.41,2);
+    if(waktu21 < 500)circle(20,728.7,73.41,2);
+    else circle(20*2,728.7,73.41,2);
     glPopMatrix();
 
 }
