@@ -1,0 +1,12 @@
+2D object used :
+- GL_POLYGON
+- GL_TRIANGLE_STRIP
+- GL_QUADS
+
+Transformations used :
+- Dilation, to scale "Telor"
+- Rotation, to rotate the "RECTANGLE".
+- Translations, for "I N D A H" and "cloud" moves.
+
+Interactions :
+- Using the mouse. if left-clicked, day will be night and night will be day.
